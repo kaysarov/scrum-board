@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+	<head>
+		<title>Skrum board</title>
+		<!--meta-->
+		<meta charset="UTF-8" />
+		<!--slider revolution-->
+		<link rel="stylesheet" type="text/css" href="static/rs-plugin/css/settings.css" media="screen" />
+		<!--style-->
+		<link href='//fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,600,700,800&amp;subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" type="text/css" href="{% static 'style/reset.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'style/superfish.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'style/prettyPhoto.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'style/jquery.qtip.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'style/style.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'style/animations.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'style/responsive.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'style/odometer-theme-default.css' %}">
+		<!--fonts-->
+		<link rel="stylesheet" type="text/css" href="{% static 'fonts/streamline-small/style.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'fonts/template/styles.css' %}">
+		<link rel="stylesheet" type="text/css" href="{% static 'fonts/social/styles.css' %}">
+        {% block head %}
+   {% endblock %}
+	</head>
+	<body>
+		<div class="site-container">
+            <div class="header-top-bar-container clearfix">
+				<div class="header-top-bar">
+                <ul class="contact-details clearfi">
+									<li>
+										<a href="{% url 'home' %}" title="Home">
+											Спринты
+										</a>
+									</li>
+									<li>
+										<a href="#curve_chart" title="Services">
+											График спринта
+										</a>
+									</li>
+								</ul>
+					<ul class="social-icons">
+						{% if user.is_authenticated %}
+						{% if user.is_superuser %}
+						 <li><a href="{% url 'admin:index' %}">Личный кабинет</a></li>
+						{% endif %}
+						 <li><a href="{% url 'logout'%}?next={{request.path}}">Выйти</a></li>
+                       {% else %}
+                         <li><a href="{% url 'login'%}?next={{request.path}}">Войти</a></li>
+                       {% endif %}
+					</ul>
+				</div>
+			</div>
+                {% block content %}
+                {% endblock %}
+            <div class="row dark-gray footer-row full-width padding-top-30 padding-bottom-30">
+            <div class="row align-center"> <span class="copyright">© 2018 Kaysarov. </span> </div>
+        </div>
+
+		<div class="background-overlay"></div>
+		<!--js-->
+		<script type="text/javascript" src="{% static 'js/jquery-1.12.4.min.js' %}"></script>
+		<script type="text/javascript" src="{% static 'js/jquery-migrate-1.4.1.min.js' %}"></script>
+		<!--slider revolution-->
+		<script type="text/javascript" src="{% static 'rs-plugin/js/jquery.themepunch.tools.min.js' %}"></script>
+		<script type="text/javascript" src="{% static 'rs-plugin/js/jquery.themepunch.revolution.min.js' %}"></script>
+		<script type="text/javascript" src="{% static 'js/jquery.ba-bbq.min.js' %}"></script>
+		<script type="text/javascript" src="{% static 'js/jquery-ui-1.11.4.custom.min.js' %}"></script>
+		<script type="text/javascript" src="{% static 'js/jquery.ui.touch-punch.min.js' %}"></script>
+		<script type="text/javascript" src="{% static 'js/jquery.isotope.min.js' %}"></script>
+		<script type="text/javascript" src="{% static 'js/jquery.easing.1.3.min.js' %}"></script>
+		<script type="text/javascript" src="{% static 'js/jquery.carouFredSel-6.2.1-packed.js' %}"></script>
+		<script type="text/javascript" src="{% static 'js/jquery.touchSwipe.min.js' %}"></script>
+		<script type="text/javascript" src="{% static 'js/jquery.transit.min.js' %}"></script>
+		<script type="text/javascript" src="{% static 'js/jquery.hint.min.js' %}"></script>
+		<script type="text/javascript" src="{% static 'js/jquery.costCalculator.min.js' %}"></script>
+		<script type="text/javascript" src="{% static 'js/jquery.parallax.min.js' %}"></script>
+		<script type="text/javascript" src="{% static 'js/jquery.prettyPhoto.js' %}"></script>
+		<script type="text/javascript" src="{% static 'js/jquery.qtip.min.js' %}"></script>
+		<script type="text/javascript" src="{% static 'js/jquery.blockUI.min.js' %}"></script>
+		<script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+		<script type="text/javascript" src="{% static 'js/odometer.min.js' %}"></script>
+	</body>
+</html>

@@ -1,0 +1,34 @@
+{% extends 'board/base.html' %}
+
+{% load staticfiles %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block content %}
+
+ <div class="row margin-top-20 align-center padding-bottom-87">
+        <div class="row">
+            <h2 class="box-header">Спринты</h2>
+            <div class="row page-margin-top">
+                {% for i in sprints %}
+                <div class="column column-1-3">
+                    <ul class="features-list big">
+                        <li>
+                            <a href="{% url 'tasks' pk=i.id %}">
+                                <h5>{{i.title}}</h5>
+                            </a>
+                            <p class="description">Начало:{{i.begin}}<br>Конец:{{i.end}}</p>
+                            <p class="description">Описание:<br>{{i.description}}</p>
+                        </li>
+                    </ul>
+                </div>
+            {% endfor %}
+
+            </div>
+        </div>
+    </div>
+
+
+{% endblock %}

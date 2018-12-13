@@ -1,0 +1,149 @@
+{% extends 'board/base.html' %}
+
+{% load staticfiles %}
+
+{% block head %}
+     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['corechart']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['День', 'Количество задач', 'План'],
+            {% for id, value in tasks_dict.items %}
+                ['{{ id }}', {{ value.test }}, {{value.plan}}],
+            {% endfor %}
+        ]);
+
+        var options = {
+          title: 'График спринта',
+          curveType: 'function',
+          legend: { position: 'bottom' }
+        };
+
+        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+
+        chart.draw(data, options);
+      }
+    </script>
+{% endblock %}
+
+{% block content %}
+<div class="row margin-top-20 align-center padding-bottom-50">
+	<h2 class="box-header">Scrum доска</h2>
+    <div class="row margin-top-10 padding-bottom-17">
+        <div class="row margin-top-20">
+            <div class="column column-1-4">
+                <h4 class="align-center">Запланировано</h4>
+                    <ul class="accordion margin-top-20 clearfix">
+                        {% for id, value in status1.items %}
+                        <li>
+                            <div id="accordion-{{id}}">
+                                {% if value.priority == 1 %}
+                                    <h4 style="color: red">{{value.title}}</h4>
+                                {% elif value.priority == 2 %}
+                                    <h4 style="color: green">{{value.title}}</h4>
+                                {% else %}
+                                    <h4 style="color: blue">{{value.title}}</h4>
+                                {% endif %}
+                            </div>
+                            <div class="description">
+                                 <form method="post" action="{% url 'edit_task' pk=id ck=key %}">
+                                    {% csrf_token %}
+                                    {{ value.form.as_p }}
+                                    <input class="more display-block submit-contact-form" type="submit" value="Изменить" />
+                                    <input type="hidden" name="next" value="{{ next }}" />
+                                </form>
+                            </div>
+                        </li>
+
+                        {% endfor %}
+                    </ul>
+            </div>
+            <div class="column column-1-4">
+                <h4 class="align-center">В работе</h4>
+                    <ul class="accordion margin-top-20 clearfix">
+                        {% for id, value in status2.items %}
+                        <li>
+                            <div id="accordion-{{id}}">
+                                {% if value.priority == 1 %}
+                                    <h4 style="color: red">{{value.title}}</h4>
+                                {% elif value.priority == 2 %}
+                                    <h4 style="color: green">{{value.title}}</h4>
+                                {% else %}
+                                    <h4 style="color: blue">{{value.title}}</h4>
+                                {% endif %}
+                            </div>
+                            <div class="description">
+                                 <form method="post" action="{% url 'edit_task' pk=id ck=key %}">
+                                    {% csrf_token %}
+                                    {{ value.form.as_p }}
+                                    <input class="more display-block submit-contact-form" type="submit" value="Изменить" />
+                                    <input type="hidden" name="next" value="{{ next }}" />
+                                </form>
+                            </div>
+                        </li>
+
+                        {% endfor %}
+                    </ul>
+            </div>
+                <div class="column column-1-4">
+                <h5 class="align-center">Тестирование</h5>
+                    <ul class="accordion margin-top-20 clearfix">
+                        {% for id, value in status3.items %}
+                        <li>
+                            <div id="accordion-{{id}}">
+                                {% if value.priority == 1 %}
+                                    <h4 style="color: red">{{value.title}}</h4>
+                                {% elif value.priority == 2 %}
+                                    <h4 style="color: green">{{value.title}}</h4>
+                                {% else %}
+                                    <h4 style="color: blue">{{value.title}}</h4>
+                                {% endif %}
+                            </div>
+                            <div class="description">
+                                 <form method="post" action="{% url 'edit_task' pk=id ck=key %}">
+                                    {% csrf_token %}
+                                    {{ value.form.as_p }}
+                                    <input class="more display-block submit-contact-form" type="submit" value="Изменить" />
+                                    <input type="hidden" name="next" value="{{ next }}" />
+                                </form>
+                            </div>
+                        </li>
+
+                        {% endfor %}
+                    </ul>
+            </div>
+                <div class="column column-1-4">
+                <h5 class="align-center">Готово</h5>
+                    <ul class="accordion margin-top-20 clearfix">
+                        {% for id, value in status4.items %}
+                        <li>
+                            <div id="accordion-{{id}}">
+                                {% if value.priority == 1 %}
+                                    <h4 style="color: red">{{value.title}}</h4>
+                                {% elif value.priority == 2 %}
+                                    <h4 style="color: green">{{value.title}}</h4>
+                                {% else %}
+                                    <h4 style="color: blue">{{value.title}}</h4>
+                                {% endif %}
+                            </div>
+                            <div class="description">
+                                 <form method="post" action="{% url 'edit_task' pk=id ck=key %}">
+                                    {% csrf_token %}
+                                    {{ value.form.as_p }}
+                                    <input class="more display-block submit-contact-form" type="submit" value="Изменить" />
+                                    <input type="hidden" name="next" value="{{ next }}" />
+                                </form>
+                            </div>
+                        </li>
+
+                        {% endfor %}
+                    </ul>
+            </div>
+        </div>
+    <div id="curve_chart" style="width: 1200px; height: 700px; margin: auto"></div>
+    </div>
+</div>
+{% endblock %}
